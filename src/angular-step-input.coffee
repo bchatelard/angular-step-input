@@ -55,7 +55,7 @@ module.directive 'tienStepInput', ($interpolate, $sce) ->
 
       # custom view_value as method
       if scope.property.view_value.call?
-        scope.property.view_value = $sce.trustAsHtml("#{scope.property.view_value.call(scope.value)}")
+        scope.property.view_value = $sce.trustAsHtml("#{scope.property.view_value(scope.value)}")
       # custom view_value as expression
       else
         scope.property.view_value = $sce.trustAsHtml($interpolate(scope.property.view_value)(scope))

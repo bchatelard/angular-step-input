@@ -55,7 +55,7 @@
             angular.extend(scope.property, overrides[0]);
           }
           if (scope.property.view_value.call != null) {
-            return scope.property.view_value = $sce.trustAsHtml("" + (scope.property.view_value.call()));
+            return scope.property.view_value = $sce.trustAsHtml("" + (scope.property.view_value(scope.value)));
           } else {
             return scope.property.view_value = $sce.trustAsHtml($interpolate(scope.property.view_value)(scope));
           }

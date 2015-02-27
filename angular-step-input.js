@@ -24,6 +24,7 @@
           decrease: 'fa fa-minus',
           increase: 'fa fa-plus',
           min_value: 0,
+          step: 1,
           max_value: 999,
           style: 'primary',
           view_value: false,
@@ -34,10 +35,10 @@
         }, true);
         scope.value = !isNaN(parseInt(scope.value)) ? scope.value : 0;
         scope.decrease = function() {
-          return scope.value = scope.value - 1;
+          return scope.value = scope.value - options.step;
         };
         scope.increase = function() {
-          return scope.value = scope.value + 1;
+          return scope.value = scope.value + options.step;
         };
         return scope.$watch('value', function(val, oldval) {
           var overrides;

@@ -19,6 +19,7 @@ module.directive 'tienStepInput', ($interpolate, $sce) ->
       decrease: 'fa fa-minus'
       increase: 'fa fa-plus'
       min_value: 0
+      step: 1
       max_value: 999
       style: 'primary'
       view_value: false
@@ -32,10 +33,10 @@ module.directive 'tienStepInput', ($interpolate, $sce) ->
     scope.value = if !isNaN(parseInt(scope.value)) then scope.value else 0
 
     scope.decrease = ->
-      scope.value = scope.value - 1
+      scope.value = scope.value - options.step
 
     scope.increase = ->
-      scope.value = scope.value + 1
+      scope.value = scope.value + options.step
 
     scope.$watch 'value', (val, oldval) ->
       # limit value between min_value and max_value

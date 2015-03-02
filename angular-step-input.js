@@ -30,17 +30,7 @@
           view_value: false,
           overrides: []
         };
-        scope.$watch(scope.user_options, function(val) {
-          return angular.extend(options, scope.user_options(scope));
-        }, true);
-        scope.value = !isNaN(parseInt(scope.value)) ? scope.value : 0;
-        scope.decrease = function() {
-          return scope.value = scope.value - options.step;
-        };
-        scope.increase = function() {
-          return scope.value = scope.value + options.step;
-        };
-        return scope.$watch('value', function(val, oldval) {
+        scope.onChange = function(val, oldval) {
           var overrides;
           if (!isNaN(parseInt(scope.value))) {
             scope.value = Math.min(Math.max(parseInt(val), options.min_value), options.max_value);
@@ -59,6 +49,20 @@
           } else {
             return scope.property.view_value = $sce.trustAsHtml($interpolate(scope.property.view_value)(scope));
           }
+        };
+        scope.$watch(scope.user_options, function(val) {
+          angular.extend(options, scope.user_options(scope));
+          return scope.onChange(scope.value, scope.value);
+        }, true);
+        scope.value = !isNaN(parseInt(scope.value)) ? scope.value : 0;
+        scope.decrease = function() {
+          return scope.value = scope.value - options.step;
+        };
+        scope.increase = function() {
+          return scope.value = scope.value + options.step;
+        };
+        return scope.$watch('value', function(val, oldval) {
+          return scope.onChange(val, oldval);
         });
       },
       template: "<div class=\"tien-step\" ng-class=\"property.style\">\n  <button ng-click=\"decrease()\" ng-class=\"{disabled: value == property.min_value}\"><i ng-class=\"property.decrease\"></i></button>\n  <div class=\"step-value\" ng-show=\"property.view_value\" ng-bind-html=\"property.view_value\"></div>\n  <input class=\"step-value\" type=\"text\" ng-model=\"value\" ng-hide=\"property.view_value\">\n  <button ng-click=\"increase()\" ng-class=\"{disabled: value == property.max_value}\"><i ng-class=\"property.increase\"></i></button>\n</div>"

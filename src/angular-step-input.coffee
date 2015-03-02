@@ -24,20 +24,7 @@ module.directive 'tienStepInput', ($interpolate, $sce) ->
       view_value: false
       overrides: []
 
-    # merge user defined options
-    scope.$watch scope.user_options, (val) ->
-      angular.extend(options, scope.user_options(scope))
-    , true
-
-    scope.value = if !isNaN(parseInt(scope.value)) then scope.value else 0
-
-    scope.decrease = ->
-      scope.value = scope.value - 1
-
-    scope.increase = ->
-      scope.value = scope.value + 1
-
-    scope.$watch 'value', (val, oldval) ->
+    scope.onChange = (val, oldval) ->
       # limit value between min_value and max_value
       if !isNaN(parseInt(scope.value))
         scope.value = Math.min(Math.max(parseInt(val), options.min_value), options.max_value)
@@ -59,6 +46,23 @@ module.directive 'tienStepInput', ($interpolate, $sce) ->
       # custom view_value as expression
       else
         scope.property.view_value = $sce.trustAsHtml($interpolate(scope.property.view_value)(scope))
+
+    # merge user defined options
+    scope.$watch scope.user_options, (val) ->
+      angular.extend(options, scope.user_options(scope))
+      scope.onChange(scope.value, scope.value)
+    , true
+
+    scope.value = if !isNaN(parseInt(scope.value)) then scope.value else 0
+
+    scope.decrease = ->
+      scope.value = scope.value - 1
+
+    scope.increase = ->
+      scope.value = scope.value + 1
+
+    scope.$watch 'value', (val, oldval) ->
+      scope.onChange(val, oldval)
 
   template: """
     <div class="tien-step" ng-class="property.style">

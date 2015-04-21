@@ -67,9 +67,9 @@ module.directive 'tienStepInput', ($interpolate, $sce) ->
 
   template: """
     <div class="tien-step" ng-class="property.style">
-      <button ng-click="decrease()" ng-class="{disabled: value == property.min_value}"><i ng-class="property.decrease"></i></button>
+      <button type='button' ng-click="decrease()" ng-class="{disabled: value == property.min_value}"><i ng-class="property.decrease"></i></button>
       <div class="step-value" ng-show="property.view_value" ng-bind-html="property.view_value"></div>
       <input class="step-value" type="text" ng-model="value" ng-hide="property.view_value">
-      <button ng-click="increase()" ng-class="{disabled: value == property.max_value}"><i ng-class="property.increase"></i></button>
+      <button type='button' ng-click="increase()" ng-class="{disabled: value == property.max_value}"><i ng-class="property.increase"></i></button>
     </div>
   """

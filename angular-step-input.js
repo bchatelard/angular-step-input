@@ -10,7 +10,7 @@
 
   module = angular.module('tien.stepInput', []);
 
-  module.directive('tienStepInput', ["$interpolate", "$sce", function($interpolate, $sce) {
+  module.directive('tienStepInput', function($interpolate, $sce) {
     return {
       restrict: 'AE',
       replace: true,
@@ -65,8 +65,8 @@
           return scope.onChange(val, oldval);
         });
       },
-      template: "<div class=\"tien-step\" ng-class=\"property.style\">\n  <button ng-click=\"decrease()\" ng-class=\"{disabled: value == property.min_value}\"><i ng-class=\"property.decrease\"></i></button>\n  <div class=\"step-value\" ng-show=\"property.view_value\" ng-bind-html=\"property.view_value\"></div>\n  <input class=\"step-value\" type=\"text\" ng-model=\"value\" ng-hide=\"property.view_value\">\n  <button ng-click=\"increase()\" ng-class=\"{disabled: value == property.max_value}\"><i ng-class=\"property.increase\"></i></button>\n</div>"
+      template: "<div class=\"tien-step\" ng-class=\"property.style\">\n  <button type='button' ng-click=\"decrease()\" ng-class=\"{disabled: value == property.min_value}\"><i ng-class=\"property.decrease\"></i></button>\n  <div class=\"step-value\" ng-show=\"property.view_value\" ng-bind-html=\"property.view_value\"></div>\n  <input class=\"step-value\" type=\"text\" ng-model=\"value\" ng-hide=\"property.view_value\">\n  <button type='button' ng-click=\"increase()\" ng-class=\"{disabled: value == property.max_value}\"><i ng-class=\"property.increase\"></i></button>\n</div>"
     };
-  }]);
+  });
 
 }).call(this);
